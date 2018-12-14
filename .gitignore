@@ -4,3 +4,4 @@ Data
 .DS_Store
 model
 logs
+__pycache__
