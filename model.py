@@ -6,6 +6,8 @@ from keras import backend
 from keras.optimizers import Adam
 import tensorflow as tf
 
+WORD_EMBEDDING_SIZE = 50
+
 class triplet_loss_embedding_graph:
 
     def __init__(self, vocab_size, embedding_weights):
@@ -146,7 +148,7 @@ class triplet_loss_embedding_graph:
         text_input = Input(shape=(None,))
 
         word_embedding = Embedding(input_dim=self.vocab_size, #embedding_matrix.shape[0], # Vocabulary size
-                                output_dim=300, #embedding_matrix[1], # vector encoding size
+                                output_dim=WORD_EMBEDDING_SIZE, #embedding_matrix[1], # vector encoding size
                                 weights=[self.word_embedding_weights], # Pre trained word embedding
                                 input_length= 25,
                                 trainable=False, # If weights can be modified through back propagation
@@ -162,7 +164,7 @@ class triplet_loss_embedding_graph:
         text_input = Input(shape=(None,))
 
         word_embedding = Embedding(input_dim=self.vocab_size, #embedding_matrix.shape[0], # Vocabulary size
-                                output_dim=300, #embedding_matrix[1], # vector encoding size
+                                output_dim=WORD_EMBEDDING_SIZE, #embedding_matrix[1], # vector encoding size
                                 weights=[self.word_embedding_weights], # Pre trained word embedding
                                 input_length= 25,
                                 trainable=False, # If weights can be modified through back propagation

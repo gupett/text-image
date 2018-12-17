@@ -20,6 +20,8 @@ TRAINING_FILE = 'training_very_small.txt'
 IMG_HEIGHT = 255
 IMG_WIDTH = 255
 
+WORD_EMBEDDING_SIZE = 50
+
 
 class Data_generator:
 
@@ -101,7 +103,7 @@ class Data_generator:
         else:
             # load the entire embedding from file into a dictionary
             embeddings_index = dict()
-            f = open('Data/glove/glove.6B.300d.txt', encoding='utf-8')
+            f = open('Data/glove/glove.6B.{}d.txt'.format(WORD_EMBEDDING_SIZE), encoding='utf-8')
             for line in f:
                 # splits on spaces
                 values = line.split()
@@ -114,7 +116,7 @@ class Data_generator:
             f.close()
 
             # Initialize an embedding matrix with shape vocab_size x word_vector_size
-            embedding_matrix = np.zeros((self.vocabulary_size, 300))
+            embedding_matrix = np.zeros((self.vocabulary_size, WORD_EMBEDDING_SIZE))
             # Go through the tokenizer and for each index add the corresponding word vector to the row
             for word, index in self.tokenizer.word_index.items():
                 embedding_vector = embeddings_index.get(word)
@@ -215,7 +217,7 @@ class Data_generator:
             # turn the anchor annotations in to one hot sequences
             anchor_annotation_batch = list()
             for annotation in anchor_annotation:
-                annotation_tokenized = self.tokenizer.texts_to_sequences(annotation)[0]
+                annotation_tokenized = self.tokenizer.texts_to_sequences([annotation])[0]
                 padded_annotation_tokenized = pad_sequences([annotation_tokenized], maxlen=25)
                 anchor_annotation_batch.append(padded_annotation_tokenized)
 
